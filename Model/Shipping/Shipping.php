@@ -137,7 +137,9 @@ class Shipping extends \Magento\Shipping\Model\Shipping
         $this->_messageManager = $messageManager;
         $this->_checkoutSession = $checkoutSession;
 
-        $this->rateRequestFactory = $rateRequestFactory ?: ObjectManager::getInstance()->get(RateRequestFactory::class);
+        $this->rateRequestFactory = 
+                $rateRequestFactory ?: ObjectManager::getInstance()
+                    ->get(RateRequestFactory::class);
 
     }
 
@@ -147,7 +149,8 @@ class Shipping extends \Magento\Shipping\Model\Shipping
         // print_r($request);
         // die;
         /* @var $carrier \Magento\Shipping\Model\Carrier\AbstractCarrier */
-        $carrier = $this->_carrierFactory->createIfActive($carrierCode, $request->getQuoteStoreId());
+        $carrier = $this->_carrierFactory
+            ->createIfActive($carrierCode, $request->getQuoteStoreId());
         if (!$carrier) {
             return $this;
         }
@@ -222,12 +225,14 @@ class Shipping extends \Magento\Shipping\Model\Shipping
             //looping through cart items
             foreach ($items as $item) {
                 $productSku = $item->getSku();
-                $productCollection = $this->_productFactory->create()->loadByAttribute('sku', $productSku);
+                $productCollection = $this->_productFactory->create()
+                    ->loadByAttribute('sku', $productSku);
                 //product attribute should be uk_only and country id should be 'GB'
                 if ($productCollection->getData('uk_only') and $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId() === 'GB') {
                     // found some product with attribute uk_only
                     echo $productCollection->getData('name');
-                    echo $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId();
+                    echo $this->_checkoutSession->getQuote()
+                            ->getShippingAddress()->getCountryId();
                     $message = "cart contain " . $productCollection->getData('name') . " whose shipping is restricted to UK only";
                     $this->_messageManager->addError(__($message));
                     $flag = true;

@@ -35,8 +35,10 @@ class InstallData implements InstallDataInterface
                 'label' => 'UK Only',
                 'input' => 'boolean',
                 'class' => '',
-                'source' => \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                'source' =>
+                     \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
+                'global' =>
+                    \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
                 'visible' => true,
                 'required' => false,
                 'user_defined' => false,
