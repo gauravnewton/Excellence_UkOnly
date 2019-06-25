@@ -145,9 +145,6 @@ class Shipping extends \Magento\Shipping\Model\Shipping
 
     public function collectCarrierRates($carrierCode, $request)
     {
-        // echo "<pre>";
-        // print_r($request);
-        // die;
         /* @var $carrier \Magento\Shipping\Model\Carrier\AbstractCarrier */
         $carrier = $this->_carrierFactory
             ->createIfActive($carrierCode, $request->getQuoteStoreId());
@@ -230,9 +227,6 @@ class Shipping extends \Magento\Shipping\Model\Shipping
                 //product attribute should be uk_only and country id should be 'GB'
                 if ($productCollection->getData('uk_only') and $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId() === 'GB') {
                     // found some product with attribute uk_only
-                    echo $productCollection->getData('name');
-                    echo $this->_checkoutSession->getQuote()
-                            ->getShippingAddress()->getCountryId();
                     $message = "cart contain " . $productCollection->getData('name') . " whose shipping is restricted to UK only";
                     $this->_messageManager->addError(__($message));
                     $flag = true;
