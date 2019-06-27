@@ -224,7 +224,7 @@ class Shipping extends \Magento\Shipping\Model\Shipping
                 $productSku = $item->getSku();
                 $productCollection = $this->_productFactory->create()
                     ->loadByAttribute('sku', $productSku);
-                //product attribute should be uk_only and country id should be 'GB'
+                //product attribute should be uk_only and country id should be 'GB' for UK
                 if ($productCollection->getData('uk_only') and $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId() === 'GB') {
                     // found some product with attribute uk_only
                     $message = "cart contain " . $productCollection->getData('name') . " whose shipping is restricted to UK only";
