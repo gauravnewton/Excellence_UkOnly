@@ -1,6 +1,7 @@
 <?php
 
 namespace Excellence\UkOnly\Plugin\Shipping;
+use Magento\Framework\Exception\StateException;
 
 class Shipping extends \Magento\Shipping\Model\Shipping
 {
@@ -12,9 +13,13 @@ class Shipping extends \Magento\Shipping\Model\Shipping
 
     protected $_checkoutSession;
 
+    protected $_jsonResultFactory;
+
     public function __construct(
+        \Magento\Framework\App\Action\Context $context,
         \Magento\Checkout\Model\Cart $cart,
         \Magento\Catalog\Model\ProductFactory $productFactory,
+        \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory,
         \Magento\Framework\Message\ManagerInterface $messageManager,
         \Magento\Checkout\Model\Session $checkoutSession
     ) {
@@ -22,6 +27,7 @@ class Shipping extends \Magento\Shipping\Model\Shipping
         $this->_productFactory = $productFactory;
         $this->_messageManager = $messageManager;
         $this->_checkoutSession = $checkoutSession;
+        $this->_jsonResultFactory = $jsonResultFactory;
     }
 
 
@@ -45,7 +51,7 @@ class Shipping extends \Magento\Shipping\Model\Shipping
             if ($productCollection->getData('uk_only') and $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId() === 'GB') {
                 // found some product with attribute uk_only
                 $message = "cart contain " . $productCollection->getData('name') . " whose shipping is restricted to UK only";
-                $this->_messageManager->addError(__($message));
+                $this->_messageManager->addErrorMessage(__($message));
                 $flag = true;
             }
         }
@@ -56,7 +62,25 @@ class Shipping extends \Magento\Shipping\Model\Shipping
             */
 
             $methods = [];
+            throw new StateException(__($message)); 
         }
         return $methods;
     }
+
+
+    // public function beforeSaveAddressInformation(
+    //     \Magento\Checkout\Model\ShippingInformationManagement $subject,
+    //     $cartId,
+    //     \Magento\Checkout\Api\Data\ShippingInformationInterface $addressInformation
+
+    // )
+    // {
+    //     die("sdfghjkl");
+    //     $address = $addressInformation->getShippingAddress();
+    //     $postcode = $address->getData('postcode');
+    //     $objectManager =   \Magento\Framework\App\ObjectManager::getInstance();
+    //     $result = $this->jsonResultFactory->create();
+    //     $stat="no sevice";
+    //     throw new StateException(__($stat));             
+    // }
 }
