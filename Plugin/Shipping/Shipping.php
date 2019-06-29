@@ -66,21 +66,4 @@ class Shipping extends \Magento\Shipping\Model\Shipping
         }
         return $methods;
     }
-
-
-    // public function beforeSaveAddressInformation(
-    //     \Magento\Checkout\Model\ShippingInformationManagement $subject,
-    //     $cartId,
-    //     \Magento\Checkout\Api\Data\ShippingInformationInterface $addressInformation
-
-    // )
-    // {
-    //     die("sdfghjkl");
-    //     $address = $addressInformation->getShippingAddress();
-    //     $postcode = $address->getData('postcode');
-    //     $objectManager =   \Magento\Framework\App\ObjectManager::getInstance();
-    //     $result = $this->jsonResultFactory->create();
-    //     $stat="no sevice";
-    //     throw new StateException(__($stat));             
-    // }
 }
